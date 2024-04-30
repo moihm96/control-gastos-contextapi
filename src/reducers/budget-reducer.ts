@@ -13,6 +13,3 @@ export const budgetReducer = (state: BudgetState, action: BudgetActions) => {
   }
   return state;
 };
-/**if (action.type === "") {
-    return { ...state };
-  } */
