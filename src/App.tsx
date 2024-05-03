@@ -6,7 +6,7 @@ import ExpenseModal from "./components/ExpenseModal";
 import ExpenseList from "./components/ExpenseList";
 
 function App() {
-  const { state } = useBudget();
+  const { state, dispatch } = useBudget();
 
   const isValidBudget = useMemo(() => state.budget > 0, [state.budget]);
 
@@ -17,10 +17,22 @@ function App() {
 
   return (
     <>
-      <header className="bg-blue-600 max-h-72">
-        <h1 className="font-black text-center uppercase text-4xl">
-          Planificador de gastos
-        </h1>
+      <header className="bg-blue-600 max-h-72 py-3">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <h1 className="font-black text-center uppercase text-4xl">
+            Planificador de gastos
+          </h1>
+          <button
+            className="bg-pink-500 hover:bg-pink-800 p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm"
+            onClick={() =>
+              dispatch({
+                type: "restart-app",
+              })
+            }
+          >
+            Reiniciar App
+          </button>
+        </div>
       </header>
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
         {isValidBudget ? <BudgetTracker /> : <BudgetForm />}
