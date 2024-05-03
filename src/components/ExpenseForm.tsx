@@ -17,7 +17,9 @@ export default function ExpenseForm() {
 
   const [error, setError] = useState("");
 
-  const { state, dispatch } = useBudget();
+  const [previousAmount, setPreviousAmount] = useState(0);
+
+  const { state, dispatch, remainingBudget } = useBudget();
 
   useEffect(() => {
     if (state.editingId) {
@@ -25,6 +27,7 @@ export default function ExpenseForm() {
         (currentExpense) => currentExpense.id === state.editingId
       )[0];
       setExpense(editingExpense);
+      setPreviousAmount(editingExpense.amount);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.editingId]);
@@ -51,6 +54,11 @@ export default function ExpenseForm() {
       return;
     }
 
+    if (expense.amount - previousAmount > remainingBudget) {
+      setError("Ese gasto se sale del presupuesto");
+      return;
+    }
+
     if (state.editingId) {
       dispatch({
         type: "update-expense",
@@ -66,6 +74,7 @@ export default function ExpenseForm() {
       category: "",
       date: new Date(),
     });
+    setPreviousAmount(0);
   };
 
   return (
