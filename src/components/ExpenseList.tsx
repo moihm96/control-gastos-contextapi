@@ -12,7 +12,7 @@ export default function ExpenseList() {
     : state.expenses;
 
   const isEmpty = useMemo(
-    () => filteredExpenses.length < 0,
+    () => filteredExpenses.length <= 0,
     [filteredExpenses]
   );
 
